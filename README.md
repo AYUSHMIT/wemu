@@ -1,8 +1,71 @@
 # WeMu: Effective and Scalable Emulation of Microarchitectural Weird Machines
 
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker&logoColor=white)](Dockerfile)
+[![Demo](https://img.shields.io/badge/Demo-Interactive-667eea.svg)](demo/index.html)
+
 This repository contains the artifact for the paper "WeMu: Effective and Scalable Emulation of Microarchitectural Weird Machines" submitted to uASC 2026 (<paper_url>).
 
-WeMu is the first emulation framework designed specifically for analyzing Microarchitectural Weird Machines (µWMs), enabling observation and reverse engineering of hidden microarchitectural computations.
+WeMu is the first emulation framework designed specifically for analyzing **Microarchitectural Weird Machines (µWMs)**, enabling observation and reverse engineering of hidden microarchitectural computations.
+
+## 🎨 Interactive Demo
+
+**[Try the Interactive Demo →](demo/index.html)**
+
+Explore µWMs visually with our browser-based demo featuring:
+- 🎮 **Live Playground** - Run 24 pre-built µWM examples
+- 📊 **Real-time Visualization** - See cache/RSB state changes
+- ⚡ **Execution Timeline** - Step-by-step instruction traces
+- 🎓 **Guided Tutorials** - Learn µWM concepts interactively
+
+![WeMu Demo Screenshot](https://via.placeholder.com/800x400/667eea/ffffff?text=WeMu+Interactive+Demo)
+
+*See [DEMO.md](DEMO.md) for comprehensive demo documentation.*
+
+## Architecture Overview
+
+```
+┌──────────────────────────────────────────────────────┐
+│                   WeMu Components                     │
+├──────────────────────────────────────────────────────┤
+│                                                       │
+│  ┌────────────────────────────────────────────────┐ │
+│  │      MuWMEmulator (Core Orchestrator)          │ │
+│  │  • Transient execution modeling                │ │
+│  │  • Out-of-order simulation                     │ │
+│  │  • Checkpointing & rollback                    │ │
+│  └────────────────────────────────────────────────┘ │
+│         │              │              │              │
+│         ▼              ▼              ▼              │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐          │
+│  │  Cache   │  │   RSB    │  │  Timer   │          │
+│  │  Model   │  │  Model   │  │ (RDTSCP) │          │
+│  └──────────┘  └──────────┘  └──────────┘          │
+│                                                       │
+│  ┌─────────────────┐     ┌─────────────────┐       │
+│  │ Unicorn Engine  │     │  ELF/ASM Loader │       │
+│  │ (CPU Emulator)  │     │  Execution Logs │       │
+│  └─────────────────┘     └─────────────────┘       │
+└──────────────────────────────────────────────────────┘
+```
+
+## Featured Examples
+
+### Logic Gates (GITM)
+- **AND/OR/XOR/NOT** - Basic boolean operations via cache side-effects
+- **MUX/NAND** - Composite gates using exception-based transient execution
+
+### Cryptography (FLEXO)
+- **Simon32** - Lightweight block cipher (14 rounds, RSB-based)
+- **AES Round** - Single AES encryption round using RSB manipulation
+- **SHA-1** - Hash computation via microarchitectural side channels
+
+### Arithmetic
+- **Full Adder** - 1-bit addition with carry
+- **2-bit ALU** - Basic arithmetic logic unit
+
+*Total: 24 validated µWM implementations across GITM (7) and FLEXO (17) frameworks*
 
 ## Quick Start
 
@@ -63,6 +126,37 @@ Test passed for AND(1, 1)
 ### Enabling Execution Traces
 By default, running the tests will _not_ produce execution traces for debugging and analysis, these can be enabled by passing `debug=True` to the `run_<muwm_name>_test` or `emulate_<framework_name>_<muwm_name>_test` functions. Note that if a unit test iterates over multiple input combinations, the debug logs will be overwritten for every iteration, so only those from the last input combination will remain visible.
 
+### Visualizing Traces
+Generate interactive HTML visualizations from execution traces:
+```bash
+# Run a test with debug enabled (generates trace)
+python unit_tests.py test_gitm_and
+
+# Generate visualization
+python ../scripts/generate_trace_viz.py output/gitm_and/emulation_log.txt
+
+# Open trace_viz/emulation_log_*.html in browser
+```
+
+See [scripts/generate_trace_viz.py](scripts/generate_trace_viz.py) for more options.
+
+---
+
+## 📚 Learning Resources
+
+### Tutorials
+Progressive learning path from beginner to advanced:
+1. **[Building Your First µWM](examples/tutorials/01-basic-and-gate.md)** (15 min) - AND gate using GITM
+2. **[RSB-Based Cryptography](examples/tutorials/02-rsb-crypto.md)** (30 min) - Simon32 encryption with FLEXO
+3. **[Creating Custom µWMs](examples/tutorials/03-custom-muwm.md)** (45 min) - Design your own weird machines
+
+### Documentation
+- **[Demo Guide](DEMO.md)** - Comprehensive interactive demo documentation
+- **[Architecture Details](#architecture-overview)** - Component descriptions below
+- **[Custom Analysis](#custom-µwm-analysis)** - Extend WeMu for your research
+
+---
+
 # Repository Structure
 
 ## Microarchitectural modeling
@@ -121,3 +215,26 @@ The [`MuWMEmulator`](./src/emulator.py) produces execution traces for debugging 
 
 # License
 This project is licensed under the MIT License. See the [`LICENSE`](./LICENSE) file for full details.
+
+---
+
+## 🌟 Quick Links
+
+- 🎮 [Interactive Demo](demo/index.html)
+- 📖 [Demo Guide](DEMO.md)
+- 📚 [Tutorials](examples/tutorials/)
+- 🔧 [Trace Visualizer](scripts/generate_trace_viz.py)
+- 🐛 [Issues](https://github.com/AYUSHMIT/wemu/issues)
+
+## Citation
+
+If you use WeMu in your research, please cite:
+
+```bibtex
+@inproceedings{wemu2026,
+  title={WeMu: Effective and Scalable Emulation of Microarchitectural Weird Machines},
+  author={[Authors]},
+  booktitle={uASC 2026},
+  year={2026}
+}
+```
