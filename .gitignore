@@ -5,3 +5,12 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# WeMu output directories
+src/output/
+trace_viz/
+
+# Temporary files
+*.tmp
+*.log
+.DS_Store

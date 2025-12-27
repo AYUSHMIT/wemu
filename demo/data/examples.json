@@ -1,0 +1,326 @@
+{
+  "examples": [
+    {
+      "id": "gitm-and",
+      "name": "AND Gate",
+      "category": "GITM",
+      "framework": "Exception-based Transient Execution",
+      "complexity": "beginner",
+      "description": "Implements a logical AND gate using exception-based transient execution. The output is encoded in the cache state.",
+      "code_snippet": "movzx rcx, byte [r13]\nadd rcx, r14\nmovzx rdx, byte [rcx]\nadd rdx, r15\nmov dl, byte [rdx]",
+      "inputs": 2,
+      "expected_outputs": {
+        "0,0": 0,
+        "0,1": 0,
+        "1,0": 0,
+        "1,1": 1
+      }
+    },
+    {
+      "id": "gitm-or",
+      "name": "OR Gate",
+      "category": "GITM",
+      "framework": "Exception-based Transient Execution",
+      "complexity": "beginner",
+      "description": "Logical OR gate using cache side-effects during transient execution after a division-by-zero exception.",
+      "inputs": 2,
+      "expected_outputs": {
+        "0,0": 0,
+        "0,1": 1,
+        "1,0": 1,
+        "1,1": 1
+      }
+    },
+    {
+      "id": "gitm-not",
+      "name": "NOT Gate",
+      "category": "GITM",
+      "framework": "Exception-based Transient Execution",
+      "complexity": "beginner",
+      "description": "Logical NOT gate - inverts the input bit using transient execution.",
+      "inputs": 1,
+      "expected_outputs": {
+        "0": 1,
+        "1": 0
+      }
+    },
+    {
+      "id": "gitm-nand",
+      "name": "NAND Gate",
+      "category": "GITM",
+      "framework": "Exception-based Transient Execution",
+      "complexity": "beginner",
+      "description": "NAND gate (NOT AND) - produces output of 0 only when both inputs are 1.",
+      "inputs": 2,
+      "expected_outputs": {
+        "0,0": 1,
+        "0,1": 1,
+        "1,0": 1,
+        "1,1": 0
+      }
+    },
+    {
+      "id": "gitm-xor",
+      "name": "XOR Gate",
+      "category": "GITM",
+      "framework": "Exception-based Transient Execution",
+      "complexity": "beginner",
+      "description": "XOR (exclusive OR) gate - outputs 1 when inputs differ.",
+      "inputs": 2,
+      "expected_outputs": {
+        "0,0": 0,
+        "0,1": 1,
+        "1,0": 1,
+        "1,1": 0
+      }
+    },
+    {
+      "id": "gitm-mux",
+      "name": "Multiplexer",
+      "category": "GITM",
+      "framework": "Exception-based Transient Execution",
+      "complexity": "intermediate",
+      "description": "2-to-1 multiplexer - selects between two inputs based on a selector bit.",
+      "inputs": 3,
+      "expected_outputs": {
+        "0,0,0": 0,
+        "1,0,0": 1,
+        "0,1,1": 1,
+        "1,1,1": 1
+      }
+    },
+    {
+      "id": "gitm-assign",
+      "name": "ASSIGN",
+      "category": "GITM",
+      "framework": "Exception-based Transient Execution",
+      "complexity": "beginner",
+      "description": "Simple assignment - outputs the input value unchanged.",
+      "inputs": 1,
+      "expected_outputs": {
+        "0": 0,
+        "1": 1
+      }
+    },
+    {
+      "id": "flexo-and",
+      "name": "FLEXO AND",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "intermediate",
+      "description": "AND gate using Return Stack Buffer manipulation for output encoding.",
+      "inputs": 2,
+      "expected_outputs": {
+        "0,0": 0,
+        "0,1": 0,
+        "1,0": 0,
+        "1,1": 1
+      }
+    },
+    {
+      "id": "flexo-or",
+      "name": "FLEXO OR",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "intermediate",
+      "description": "OR gate using RSB-based computation.",
+      "inputs": 2,
+      "expected_outputs": {
+        "0,0": 0,
+        "0,1": 1,
+        "1,0": 1,
+        "1,1": 1
+      }
+    },
+    {
+      "id": "flexo-not",
+      "name": "FLEXO NOT",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "intermediate",
+      "description": "NOT gate implemented using RSB manipulation.",
+      "inputs": 1,
+      "expected_outputs": {
+        "0": 1,
+        "1": 0
+      }
+    },
+    {
+      "id": "flexo-xor",
+      "name": "FLEXO XOR",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "intermediate",
+      "description": "XOR gate using Return Stack Buffer prediction.",
+      "inputs": 2,
+      "expected_outputs": {
+        "0,0": 0,
+        "0,1": 1,
+        "1,0": 1,
+        "1,1": 0
+      }
+    },
+    {
+      "id": "flexo-nand",
+      "name": "FLEXO NAND",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "intermediate",
+      "description": "NAND gate using RSB-based encoding.",
+      "inputs": 2,
+      "expected_outputs": {
+        "0,0": 1,
+        "0,1": 1,
+        "1,0": 1,
+        "1,1": 0
+      }
+    },
+    {
+      "id": "flexo-xor3",
+      "name": "FLEXO XOR3",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "intermediate",
+      "description": "3-input XOR gate - outputs 1 when odd number of inputs are 1.",
+      "inputs": 3,
+      "expected_outputs": {
+        "0,0,0": 0,
+        "0,0,1": 1,
+        "0,1,1": 0,
+        "1,1,1": 1
+      }
+    },
+    {
+      "id": "flexo-xor4",
+      "name": "FLEXO XOR4",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "intermediate",
+      "description": "4-input XOR gate for parity checking.",
+      "inputs": 4
+    },
+    {
+      "id": "flexo-mux",
+      "name": "FLEXO MUX",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "intermediate",
+      "description": "2-to-1 multiplexer using RSB prediction.",
+      "inputs": 3
+    },
+    {
+      "id": "flexo-adder",
+      "name": "Full Adder",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "advanced",
+      "description": "1-bit full adder with carry - fundamental arithmetic building block.",
+      "inputs": 3,
+      "arithmetic": true
+    },
+    {
+      "id": "flexo-alu",
+      "name": "2-bit ALU",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "advanced",
+      "description": "2-bit Arithmetic Logic Unit capable of basic operations (ADD, SUB, AND, OR).",
+      "inputs": "variable",
+      "arithmetic": true
+    },
+    {
+      "id": "flexo-simon32",
+      "name": "Simon32",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "advanced",
+      "description": "Simon32 block cipher encryption (14 rounds) - lightweight cryptographic primitive.",
+      "inputs": "32-bit block + key",
+      "crypto": true,
+      "performance": {
+        "avg_time_ms": 50,
+        "rounds": 14
+      }
+    },
+    {
+      "id": "flexo-aes-round",
+      "name": "AES Round",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "advanced",
+      "description": "Single round of AES-128 encryption including SubBytes, ShiftRows, MixColumns, and AddRoundKey.",
+      "inputs": "128-bit state + round key",
+      "crypto": true,
+      "performance": {
+        "avg_time_ms": 80
+      }
+    },
+    {
+      "id": "flexo-aes-block",
+      "name": "AES Block",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "advanced",
+      "description": "Complete AES-128 block encryption (10 rounds).",
+      "inputs": "128-bit plaintext + key",
+      "crypto": true,
+      "performance": {
+        "avg_time_ms": 120,
+        "rounds": 10
+      }
+    },
+    {
+      "id": "flexo-sha1-round",
+      "name": "SHA-1 Round",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "advanced",
+      "description": "Single round of SHA-1 hash function compression.",
+      "inputs": "160-bit state + message block",
+      "crypto": true
+    },
+    {
+      "id": "flexo-sha1-2blocks",
+      "name": "SHA-1 2 Blocks",
+      "category": "FLEXO",
+      "framework": "RSB-based",
+      "complexity": "advanced",
+      "description": "SHA-1 hash computation over 2 message blocks.",
+      "inputs": "1024-bit message",
+      "crypto": true,
+      "performance": {
+        "avg_time_ms": 150
+      }
+    }
+  ],
+  "statistics": {
+    "total_muwms": 24,
+    "gitm_count": 7,
+    "flexo_count": 17,
+    "beginner_count": 7,
+    "intermediate_count": 9,
+    "advanced_count": 8
+  },
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2024-12-27",
+    "framework_versions": {
+      "gitm": "2023",
+      "flexo": "2024"
+    },
+    "references": [
+      {
+        "name": "GITM Paper",
+        "authors": "Wang, P. L., Brown, F., & Wahby, R. S.",
+        "year": 2023,
+        "venue": "IEEE Security and Privacy Workshops"
+      },
+      {
+        "name": "FLEXO Paper",
+        "authors": "Wang, P. L., Paccagnella, R., Wahby, R. S., & Brown, F.",
+        "year": 2024,
+        "venue": "USENIX Security Symposium"
+      }
+    ]
+  }
+}
