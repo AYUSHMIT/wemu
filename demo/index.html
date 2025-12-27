@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WeMu - Interactive demo for Microarchitectural Weird Machines Emulator">
+    <meta property="og:title" content="WeMu: Microarchitectural Weird Machines Emulator">
+    <meta property="og:description" content="Explore and visualize microarchitectural weird machines with our interactive emulator">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WeMu Interactive Demo">
+    <meta name="twitter:description" content="Visualize and understand microarchitectural weird machines">
+    
+    <title>WeMu: Microarchitectural Weird Machines Emulator</title>
+    
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-nasm.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light theme">
+        <span class="theme-icon">🌙</span>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">⚡</span>
+                <span class="brand-name">WeMu</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#playground">Playground</a></li>
+                <li><a href="#visualizer">Visualizer</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#tutorials">Tutorials</a></li>
+                <li><a href="https://github.com/AYUSHMIT/wemu" target="_blank" rel="noopener">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">WeMu</span>
+                    <br>
+                    Microarchitectural Weird Machines Emulator
+                </h1>
+                <p class="hero-subtitle">
+                    The first emulation framework for analyzing and visualizing 
+                    <strong>Microarchitectural Weird Machines (µWMs)</strong> — hidden computations 
+                    that exploit CPU transient execution and microarchitectural side-effects.
+                </p>
+                <div class="hero-badges">
+                    <span class="badge badge-mit">MIT License</span>
+                    <span class="badge badge-python">Python 3.9+</span>
+                    <span class="badge badge-docker">Docker Ready</span>
+                </div>
+                <div class="hero-actions">
+                    <a href="#playground" class="btn btn-primary">Try Interactive Demo</a>
+                    <a href="https://github.com/AYUSHMIT/wemu" class="btn btn-secondary" target="_blank" rel="noopener">View on GitHub</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="architecture-preview">
+                    <pre class="mermaid">
+graph TB
+    A[Input Bits] -->|Cache Priming| B[µWM Code]
+    B -->|Transient Execution| C[Cache State]
+    B -->|RSB Manipulation| D[RSB Stack]
+    C -->|Side Channel| E[Output Bits]
+    D -->|Side Channel| E
+    style B fill:#667eea
+    style C fill:#f59e0b
+    style D fill:#f59e0b
+    style E fill:#10b981
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What WeMu Does -->
+    <section id="what-is-muwm" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">What are Microarchitectural Weird Machines?</h2>
+            <div class="explanation-grid">
+                <div class="explanation-card">
+                    <div class="card-icon">🔓</div>
+                    <h3>Traditional Computing</h3>
+                    <p>CPUs execute instructions that directly manipulate architectural state (registers, memory).</p>
+                    <div class="code-example">
+                        <pre><code class="language-nasm">mov rax, 42    ; Store 42 in rax
+add rax, 8     ; Add 8 to rax
+; Result: rax = 50</code></pre>
+                    </div>
+                </div>
+                <div class="explanation-card highlight">
+                    <div class="card-icon">⚡</div>
+                    <h3>µWM Computing</h3>
+                    <p>Exploit <strong>transient execution</strong> and <strong>microarchitectural side-effects</strong> (cache, RSB) to perform hidden computations.</p>
+                    <div class="code-example">
+                        <pre><code class="language-nasm">div dl          ; Trigger exception
+; ⚠️ Speculatively executes:
+mov al, [rcx]   ; Cache side-effect
+; Output encoded in cache state!</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="why-matters">
+                <h3>🔬 Why This Matters</h3>
+                <p>µWMs enable:</p>
+                <ul>
+                    <li><strong>Security Research:</strong> Understanding transient execution vulnerabilities (Spectre, Meltdown)</li>
+                    <li><strong>Side-Channel Analysis:</strong> Detecting covert channels in microarchitecture</li>
+                    <li><strong>Novel Computing:</strong> Exploring unconventional computation paradigms</li>
+                    <li><strong>Reverse Engineering:</strong> Observing hidden microarchitectural state transitions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Playground -->
+    <section id="playground" class="section">
+        <div class="container">
+            <h2 class="section-title">🎮 Interactive Playground</h2>
+            <p class="section-description">
+                Select a pre-built µWM example and see how it executes step-by-step with real-time microarchitectural state visualization.
+            </p>
+            
+            <div class="playground-container">
+                <!-- Example Selector -->
+                <div class="playground-sidebar">
+                    <h3>Examples</h3>
+                    <div class="example-category">
+                        <h4>🚀 Beginner (GITM)</h4>
+                        <button class="example-btn active" data-example="gitm-and">AND Gate</button>
+                        <button class="example-btn" data-example="gitm-or">OR Gate</button>
+                        <button class="example-btn" data-example="gitm-not">NOT Gate</button>
+                        <button class="example-btn" data-example="gitm-assign">ASSIGN</button>
+                    </div>
+                    <div class="example-category">
+                        <h4>⚡ Intermediate (FLEXO)</h4>
+                        <button class="example-btn" data-example="flexo-and">FLEXO AND</button>
+                        <button class="example-btn" data-example="flexo-xor">FLEXO XOR</button>
+                        <button class="example-btn" data-example="flexo-mux">FLEXO MUX</button>
+                    </div>
+                    <div class="example-category">
+                        <h4>🔐 Advanced (Crypto)</h4>
+                        <button class="example-btn" data-example="flexo-simon32">Simon32 Encryption</button>
+                        <button class="example-btn" data-example="flexo-aes-round">AES Round</button>
+                    </div>
+                </div>
+
+                <!-- Code Display -->
+                <div class="playground-main">
+                    <div class="code-panel">
+                        <div class="panel-header">
+                            <h3>Assembly Code</h3>
+                            <span id="example-category" class="category-badge">GITM</span>
+                        </div>
+                        <pre id="code-display"><code class="language-nasm">; Loading example...</code></pre>
+                    </div>
+
+                    <!-- Input Controls -->
+                    <div class="input-panel">
+                        <div class="panel-header">
+                            <h3>Input Configuration</h3>
+                        </div>
+                        <div id="input-controls" class="input-controls">
+                            <!-- Dynamically populated -->
+                        </div>
+                        <button id="run-btn" class="btn btn-primary btn-large">▶ Run Emulation</button>
+                    </div>
+
+                    <!-- Output Display -->
+                    <div class="output-panel">
+                        <div class="panel-header">
+                            <h3>Execution Results</h3>
+                        </div>
+                        <div id="output-display" class="output-display">
+                            <p class="placeholder">Click "Run Emulation" to see results...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualizer Section -->
+    <section id="visualizer" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">📊 Execution Visualizer</h2>
+            <p class="section-description">
+                Real-time visualization of microarchitectural state during µWM execution.
+            </p>
+
+            <div class="visualizer-container">
+                <!-- Timeline View -->
+                <div class="timeline-panel">
+                    <h3>Execution Timeline</h3>
+                    <div id="timeline-display" class="timeline">
+                        <div class="timeline-placeholder">
+                            Run an example to see execution timeline...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State Visualizations -->
+                <div class="state-grid">
+                    <!-- Cache State -->
+                    <div class="state-panel">
+                        <div class="panel-header">
+                            <h3>Cache State</h3>
+                            <span class="info-tooltip" title="Shows which memory addresses are cached">ℹ️</span>
+                        </div>
+                        <div id="cache-viz" class="cache-visualization">
+                            <div class="placeholder">Cache state will appear here...</div>
+                        </div>
+                    </div>
+
+                    <!-- RSB State -->
+                    <div class="state-panel">
+                        <div class="panel-header">
+                            <h3>RSB Stack</h3>
+                            <span class="info-tooltip" title="Return Stack Buffer - tracks return addresses">ℹ️</span>
+                        </div>
+                        <div id="rsb-viz" class="rsb-visualization">
+                            <div class="placeholder">RSB state will appear here...</div>
+                        </div>
+                    </div>
+
+                    <!-- Instruction Flow -->
+                    <div class="state-panel full-width">
+                        <div class="panel-header">
+                            <h3>Control Flow Graph</h3>
+                            <span class="info-tooltip" title="Visual representation of execution path">ℹ️</span>
+                        </div>
+                        <div id="flowchart-viz" class="flowchart-container">
+                            <pre class="mermaid" id="flowchart-content">
+graph TD
+    A[Start] -->|Initialize| B[Prime Cache]
+    B --> C{Trigger Exception}
+    C -->|Transient| D[Speculative Execution]
+    D --> E[Cache Access]
+    E --> F[Side Effect Encoded]
+    F --> G[End]
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Execution Legend -->
+                <div class="execution-legend">
+                    <h4>Instruction States:</h4>
+                    <div class="legend-items">
+                        <span class="legend-item"><span class="state-committed"></span> Committed</span>
+                        <span class="legend-item"><span class="state-transient"></span> Transient</span>
+                        <span class="legend-item"><span class="state-speculative"></span> Speculative</span>
+                        <span class="legend-item"><span class="state-faulting"></span> Faulting</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Overview -->
+    <section id="architecture" class="section">
+        <div class="container">
+            <h2 class="section-title">🏗️ Architecture Overview</h2>
+            <p class="section-description">
+                WeMu's modular architecture models key microarchitectural components needed for µWM emulation.
+            </p>
+
+            <div class="architecture-diagram">
+                <pre class="mermaid">
+graph TB
+    subgraph "WeMu Core"
+        MUE[MuWMEmulator<br/>Main Orchestrator]
+    end
+    
+    subgraph "Execution Engine"
+        UNI[Unicorn<br/>CPU Emulator]
+        CAP[Capstone<br/>Disassembler]
+    end
+    
+    subgraph "Microarchitectural Models"
+        CACHE[Cache Model<br/>LRU/Infinite]
+        RSB[RSB Model<br/>Return Stack]
+        TIMER[Timer<br/>RDTSCP]
+    end
+    
+    subgraph "Input/Output"
+        LOADER[Loader<br/>ELF/ASM]
+        LOGGER[Logger<br/>Execution Traces]
+    end
+    
+    MUE --> UNI
+    MUE --> CAP
+    MUE --> CACHE
+    MUE --> RSB
+    MUE --> TIMER
+    LOADER --> MUE
+    MUE --> LOGGER
+    
+    style MUE fill:#667eea
+    style CACHE fill:#f59e0b
+    style RSB fill:#f59e0b
+    style TIMER fill:#f59e0b
+    style LOGGER fill:#10b981
+                </pre>
+            </div>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3>🎯 MuWMEmulator</h3>
+                    <p>Core orchestrator that models transient execution, out-of-order effects, and coordinates all microarchitectural components.</p>
+                </div>
+                <div class="component-card">
+                    <h3>💾 Cache Model</h3>
+                    <p>Simulates CPU cache behavior with LRU eviction policy and tracks cache hits/misses for side-channel analysis.</p>
+                </div>
+                <div class="component-card">
+                    <h3>📚 RSB Model</h3>
+                    <p>Models the Return Stack Buffer used by FLEXO-based µWMs for encoding computation in return address predictions.</p>
+                </div>
+                <div class="component-card">
+                    <h3>⏱️ Timer</h3>
+                    <p>Abstracts RDTSCP instruction for timing-based side channels and performance measurements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tutorials Section -->
+    <section id="tutorials" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">📚 Tutorials & Examples</h2>
+            <p class="section-description">
+                Step-by-step guides to understanding and creating your own µWMs.
+            </p>
+
+            <div class="tutorial-grid">
+                <a href="../examples/tutorials/01-basic-and-gate.md" class="tutorial-card">
+                    <div class="tutorial-badge level-beginner">Beginner</div>
+                    <h3>Building Your First µWM</h3>
+                    <p>Learn the fundamentals by implementing a simple AND gate using exception-based transient execution (GITM).</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 15 min</span>
+                        <span>📝 Code + Diagrams</span>
+                    </div>
+                </a>
+
+                <a href="../examples/tutorials/02-rsb-crypto.md" class="tutorial-card">
+                    <div class="tutorial-badge level-intermediate">Intermediate</div>
+                    <h3>RSB-Based Cryptography</h3>
+                    <p>Understand how FLEXO implements Simon32 encryption using Return Stack Buffer manipulation.</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 30 min</span>
+                        <span>🔐 Security Focus</span>
+                    </div>
+                </a>
+
+                <a href="../examples/tutorials/03-custom-muwm.md" class="tutorial-card">
+                    <div class="tutorial-badge level-advanced">Advanced</div>
+                    <h3>Creating Custom µWMs</h3>
+                    <p>Master the art of designing your own microarchitectural weird machines from scratch.</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 45 min</span>
+                        <span>🚀 Advanced Techniques</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="tutorial-resources">
+                <h3>Additional Resources</h3>
+                <ul>
+                    <li><a href="../DEMO.md">📖 Complete Demo Guide</a> - Comprehensive documentation with performance benchmarks</li>
+                    <li><a href="https://github.com/AYUSHMIT/wemu/tree/main/src/tests">🧪 Unit Tests</a> - 24 validated µWM implementations</li>
+                    <li><a href="../README.md#custom-µwm-analysis">🔧 Custom Analysis Guide</a> - Extend WeMu for your research</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section id="performance" class="section">
+        <div class="container">
+            <h2 class="section-title">⚡ Performance & Validation</h2>
+            
+            <div class="performance-grid">
+                <div class="stat-card">
+                    <div class="stat-number">24</div>
+                    <div class="stat-label">Validated µWMs</div>
+                    <div class="stat-desc">From GITM and FLEXO research</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">&lt;100ms</div>
+                    <div class="stat-label">Average Emulation</div>
+                    <div class="stat-desc">Fast execution for rapid analysis</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Test Pass Rate</div>
+                    <div class="stat-desc">All gates verified against reference</div>
+                </div>
+            </div>
+
+            <div class="benchmark-table-container">
+                <h3>Example Execution Times</h3>
+                <table class="benchmark-table">
+                    <thead>
+                        <tr>
+                            <th>µWM Type</th>
+                            <th>Category</th>
+                            <th>Avg. Time (ms)</th>
+                            <th>Complexity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AND Gate</td>
+                            <td><span class="badge-sm badge-gitm">GITM</span></td>
+                            <td>~5ms</td>
+                            <td>Low</td>
+                        </tr>
+                        <tr>
+                            <td>XOR Gate</td>
+                            <td><span class="badge-sm badge-flexo">FLEXO</span></td>
+                            <td>~8ms</td>
+                            <td>Low</td>
+                        </tr>
+                        <tr>
+                            <td>Simon32</td>
+                            <td><span class="badge-sm badge-flexo">FLEXO</span></td>
+                            <td>~50ms</td>
+                            <td>Medium</td>
+                        </tr>
+                        <tr>
+                            <td>AES Round</td>
+                            <td><span class="badge-sm badge-flexo">FLEXO</span></td>
+                            <td>~80ms</td>
+                            <td>High</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>WeMu</h3>
+                    <p>Microarchitectural Weird Machines Emulator</p>
+                    <p class="footer-license">Licensed under MIT License</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/AYUSHMIT/wemu">GitHub Repository</a></li>
+                        <li><a href="../README.md">Documentation</a></li>
+                        <li><a href="../DEMO.md">Demo Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Research</h4>
+                    <ul>
+                        <li><a href="https://ieeexplore.ieee.org/">GITM Paper (2023)</a></li>
+                        <li><a href="https://www.usenix.org/">FLEXO Paper (2024)</a></li>
+                        <li><a href="#">uASC 2026 Submission</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 WeMu Project. Built for researchers and security enthusiasts.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="visualizer.js"></script>
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: document.body.classList.contains('dark-theme') ? 'dark' : 'default',
+            securityLevel: 'loose'
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('.theme-icon');
+        
+        // Check for saved theme preference
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeIcon.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            themeIcon.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            // Reinitialize Mermaid with new theme
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: isDark ? 'dark' : 'default',
+                securityLevel: 'loose'
+            });
+            location.reload(); // Reload to apply mermaid theme
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href.length > 1) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        let lastScroll = 0;
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
